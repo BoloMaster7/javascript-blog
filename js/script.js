@@ -60,10 +60,11 @@ function generateTitleLinks() {
     for (let article of articles) {
         article.classList.remove('active');
         /* get the article id */
-        const articleID = clickedElement.getAttribute('id');
+        const articleID = clickedElement.getAttribute('article');
         console.log(articleID);
         /* find the title element */
-
+        const titleElement = document.querySelector(articleID);
+        console.log(titleElement);
         /* get the title from the title element */
         const articleTitle = article.querySelector(optTitleSelector).innerHTML;
         /* create HTML of the link */
