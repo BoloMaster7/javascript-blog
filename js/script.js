@@ -1,3 +1,4 @@
+'use strict';
 
 const optArticleSelector = '.post',
     optTitleSelector = '.post-title',
@@ -87,31 +88,29 @@ function generateTags() {
         const tagsWrapper = article.querySelector(optArticleTagsSelector);
         console.log(tagsWrapper);
         /* make html variable with empty string */
-        let html = '';
+        let html = "";
         /* get tags from data-tags attribute */
-        const articleTags = article.getAttribute('data-tags');
+        const articleTags = article.getAttribute("data-tags");
         console.log(articleTags);
         /* split tags into array */
-        const articleTagsArray = articleTags.split('');
+        const articleTagsArray = articleTags.split(" ");
         console.log(articleTagsArray);
         /* START LOOP: for each tag */
         for (let tag of articleTagsArray) {
             console.log(tag);
             /* generate HTML of the link */
-            const linkHTMLTag = '<ul>' + articleTags + '</ul>';
+            const linkHTMLTag = "<ul>" + articleTags + "</ul>";
             console.log(linkHTMLTag);
             /* add generated code to html variable */
-            let html = '';
             html = html + linkHTMLTag;
             console.log(html);
             /* END LOOP: for each tag */
         }
         /* insert HTML of all the links into the tags wrapper */
-        tagsWrapper.innterHTML = html;
+        tagsWrapper.innerHTML = html;
         /* END LOOP: for every article: */
     }
 }
-
 
 generateTags();
 
@@ -135,12 +134,13 @@ function tagClickHandler(event) {
     /* find all tag links with "href" attribute equal to the "href" constant */
     const allLinks = document.querySelectorAll('a[href="' + href + '"]');
     /* START LOOP: for each found tag link */
-
-    /* add class active */
-
-    /* END LOOP: for each found tag link */
-
+    for (let eachfound of allLinks) {
+        /* add class active */
+        eachfound.classList.add('active');
+        /* END LOOP: for each found tag link */
+    }
     /* execute function "generateTitleLinks" with article selector as argument */
+    generateTitleLinks('[data-tags~="' + tag + '"]');
 }
 
 function addClickListenersToTags() {
