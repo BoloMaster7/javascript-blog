@@ -4,7 +4,8 @@ const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
   optArticleTagsSelector = '.post-tags .list',
-  optArticleAuthorSelector = 'post-author';
+  optArticleAuthorSelector = 'post-author',
+  optTagsListSelector = '.tags';
 
 const titleClickHandler = function (event) {
 
@@ -82,36 +83,47 @@ function generateTitleLinks(customSelector = '') {
 generateTitleLinks();
 
 function generateTags() {
+
+  /* [NEW] create a new variable allTags with an empty object */
+  let allTags = {};
+
   /* find all articles */
   const articles = document.querySelectorAll(optArticleSelector);
   /* START LOOP: for every article: */
   for (let article of articles) {
     /* find tags wrapper */
-    const tagsWrapper = article.querySelector(optArticleTagsSelector);
-    console.log(tagsWrapper);
+    const titleList = article.querySelector(optArticleTagsSelector);
     /* make html variable with empty string */
     let html = '';
     /* get tags from data-tags attribute */
     const articleTags = article.getAttribute('data-tags');
-    console.log(articleTags);
     /* split tags into array */
-    const articleTagsArray = articleTags.split(' ');
+    const articleTagsArray = articleTags.split('');
     console.log(articleTagsArray);
     /* START LOOP: for each tag */
     for (let tag of articleTagsArray) {
-      console.log(tag);
+      //console.log(tag);
       /* generate HTML of the link */
       const linkHTMLTag = '<li><a href="#tag-' + tag + '"><span>' + tag + '</span></a></li>';
       console.log(linkHTMLTag);
       /* add generated code to html variable */
       html = html + linkHTMLTag;
-      console.log(html);
+      /* [NEW] check if this link is NOT already in allTags */
+      if (allTags.indexOf(linkHTMLTag) == -1) {
+        /* [NEW] add generated code to allTags array */
+        allTags.push(linkHTMLTag);
+      }
       /* END LOOP: for each tag */
     }
     /* insert HTML of all the links into the tags wrapper */
-    tagsWrapper.innerHTML = html;
+    titleList.innerHTML = html;
     /* END LOOP: for every article: */
   }
+  /* [NEW] find list of tags in right column */
+  const tagList = document.querySelector(optTagsListSelector);
+
+  /* [NEW] add html from allTags to tagList */
+  tagList.innerHTML = allTags.join(' ');
 }
 
 generateTags();
@@ -161,7 +173,7 @@ addClickListenersToTags();
 
 function generateAuthors() {
   /* find all authors articles */
-  const articles = document.querySelectorAll(optArticleAuthorSelector);
+  const articles = document.querySelectorAll(optArticleSelector);
   /* START LOOP: for each articles */
   for (let article of articles) {
     /* find author*/
