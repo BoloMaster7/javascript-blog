@@ -97,12 +97,19 @@ function calculateTagsParams(tags) {
     }
   }
   return params;
+
 }
 
 function calculateTagClass(count, params) {
 
-}
+  const normalizedCount = count - params.min;
+  const normalizedMax = params.max - params.min;
+  const percentage = normalizedCount / normalizedMax;
+  const classNumber = Math.floor(percentage * (optCloudClassCount - 1) + 1);
 
+  return optCloudClassPrefix + classNumber;
+}
+/* */
 function generateTags() {
 
   /* [NEW] create a new variable allTags with an empty object */
@@ -142,7 +149,6 @@ function generateTags() {
       }
       /* END LOOP: for each tag */
     }
-
     /* insert HTML of all the links into the tags wrapper */
     tagsWrapper.innerHTML = html;
     /* END LOOP: for every article: */
@@ -150,7 +156,8 @@ function generateTags() {
 
   /* [NEW] find list of tags in right column */
   const tagList = document.querySelector(optTagsListSelector);
-  //const tagsParams = calculateTagsParams(allTags);
+  const tagsParams = calculateTagsParams(allTags);
+  console.log('tagsParams', tagsParams);
 
   /* [NEW] create variable for all links HTML code */
   let allTagsHTML = '';
@@ -158,7 +165,10 @@ function generateTags() {
   /* [NEW] START LOOP: for each tag in allTags: */
   for (let tag in allTags) {
     /* [NEW] generate code of a link and add it to allTagsHTML */
-    allTagsHTML += '<li><a href="#tag-' + tag + '"><span>' + tag + ' (' + allTags[tag] + ')</span></a></li>';
+    //allTagsHTML += '<li><a href="#tag-' + tag + '"><span>' + tag + ' (' + allTags[tag] + ')</span></a></li>'; comment for test
+    //const tagLinkHTML = '<li>' + calculateTagClass(allTags[tag], tagsParams) + '</li>';
+    allTagsHTML += '<li><a href="#tag-' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '"> ' + tag + '</a></li>';
+    //allTagsHTML += tagLinkHTML;
     /* [NEW] END LOOP: for each tag in allTags: */
   }
 
@@ -289,5 +299,6 @@ calculateTagsParams();
 addClickListenersToTags();
 generateAuthors();
 addClickListenersToAuthors();
+calculateTagClass();
 
 
