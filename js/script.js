@@ -1,4 +1,5 @@
 'use strict';
+
 const opts = {
   articleSelector: '.post',
   titleSelector: '.post-title',
@@ -52,7 +53,7 @@ const titleClickHandler = function (event) {
 function generateTitleLinks(customSelector = '') {
 
   /*  [DONE] remove contents of titleList */
-  const titleList = document.querySelector(opts.TitleListSelector);
+  const titleList = document.querySelector(opts.titleListSelector);
   titleList.innerHTML = '';
 
   /* for each article */
