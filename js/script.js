@@ -11,7 +11,8 @@ const
   optTagsListSelector = '.tags',
   optCloudClassCount = 5,
   optCloudClassPrefix = 'tag-size-',
-  optAuthorsListSelector = 'data-author';
+
+  optAuthorRightList = '.sidebar .authors';
 
 const titleClickHandler = function (event) {
 
@@ -244,7 +245,7 @@ function generateAuthors() {
     /* END LOOP: for every article */
   }
   /* [NEW] find list of authors in right column */
-  const authorList = document.querySelector(optAuthorsListSelector);
+  const authorList = document.querySelector(optAuthorRightList);
   /* [NEW] create variable for all links HTML code */
   let allAuthorsHTML = '';
   /* [NEW] START LOOP: for each tag in allAuthors: */
