@@ -1,3 +1,7 @@
+const templates = {
+  articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML)
+};
+
 'use strict';
 
 const opts = {
@@ -11,7 +15,6 @@ const
   optTagsListSelector = '.tags',
   optCloudClassCount = 5,
   optCloudClassPrefix = 'tag-size-',
-
   optAuthorRightList = '.sidebar .authors';
 
 const titleClickHandler = function (event) {
@@ -72,7 +75,8 @@ function generateTitleLinks(customSelector = '') {
     const articleTitle = titleElement.innerHTML;
 
     /* create HTML of the link */
-    const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
+    const linkHTMLData = { id: articleId, title: articleTitle };
+    const linkHTML = templates.articleLink(linkHTMLData);
     console.log(linkHTML);
     /* insert link into titleList */
     html = html + linkHTML; //'<a>Link1</a><a>Link2</a><a>Link1</a><a>Link1</a><a>Link1</a><a>Link1</a><a>Link1</a><a>Link1</a>'
